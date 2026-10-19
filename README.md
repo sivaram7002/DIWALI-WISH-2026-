@@ -66,7 +66,7 @@ Designed to be hosted for free on **GitHub Pages** and shared with friends and f
    - Direct **WhatsApp Share** (`wa.me`) with pre-formatted greeting text and link.
    - One-click **Copy Link** button with toast notification.
 9. **Footer**:
-   - *"Made with love by Sivaram S K"*
+   - *"Made with love ✨"*
 
 ---
 
@@ -166,4 +166,4 @@ You can test both pages locally without any local server:
 ---
 
 ## 📜 Credits
-Made with love by **Sivaram S K**.
+Made with love ✨.
