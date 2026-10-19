@@ -1,0 +1,1158 @@
+/* ==========================================================================
+   DIWALI WISHES - FESTIVE STYLESHEET (style.css)
+   Mobile-First, Responsive, Pure CSS (No Frameworks)
+   Languages: English & Tamil Only
+   Author: Sivaram S K
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Theme Variables & Color Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Dark Night Sky Background Gradient */
+  --bg-top:            #060817;
+  --bg-mid:            #140827;
+  --bg-bottom:         #230938;
+
+  /* Festive Warm Gold, Orange, Magenta Accents */
+  --gold-primary:      #ffd700;
+  --gold-warm:         #ffb300;
+  --gold-light:        #fff4b8;
+  --orange-accent:     #ff6d00;
+  --orange-deep:       #e65100;
+  --magenta-accent:    #e91e63;
+  --magenta-glow:      #ff2a7a;
+  --peacock-cyan:      #00e5ff;
+
+  /* Card Surfaces & Glassmorphism */
+  --card-bg:           rgba(20, 12, 38, 0.78);
+  --card-border:       rgba(255, 215, 0, 0.28);
+  --card-border-hover: rgba(255, 215, 0, 0.55);
+  --card-shadow:       0 12px 36px rgba(0, 0, 0, 0.55), 0 0 22px rgba(255, 179, 0, 0.08);
+
+  /* Typography */
+  --text-main:         #fcfbf9;
+  --text-muted:        #d4cae3;
+  --text-gold:         #ffe082;
+
+  /* Fonts: Latin and Tamil Subsets */
+  --font-decorative:   'Cinzel Decorative', 'Noto Sans Tamil', serif;
+  --font-tamil:        'Noto Sans Tamil', sans-serif;
+  --font-body:         'Outfit', 'Noto Sans Tamil', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Transitions */
+  --tr-fast:           0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --tr-smooth:         0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Global Styles
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: radial-gradient(circle at 50% 15%, var(--bg-mid) 0%, var(--bg-top) 65%, #02030a 100%);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.6;
+  position: relative;
+  overflow-x: hidden;
+  background-attachment: fixed;
+}
+
+/* Background Canvas for Fireworks */
+#fireworks-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+/* Twinkling Starry Sky Overlay */
+.stars-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 25px 35px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 85px 130px, #ffd700, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 160px 75px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 240px 190px, #ffb300, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 320px 95px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 390px 250px, #ff80ab, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 420px 320px;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+   Falling Sweets Layer (Festive Sweets Figures Falling from Up to Down)
+   -------------------------------------------------------------------------- */
+.falling-sweets-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.falling-sweet {
+  position: absolute;
+  top: -50px;
+  user-select: none;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: sweetFall linear forwards;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  line-height: 1;
+}
+
+@keyframes sweetFall {
+  0% {
+    transform: translate3d(0, -50px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  88% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(var(--drift-x, 25px), 108vh, 0) rotate(var(--spin, 360deg));
+    opacity: 0;
+  }
+}
+
+/* Screen Flash Overlay (Explosions) */
+.screen-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle, rgba(255, 235, 140, 0.75) 0%, rgba(255, 140, 0, 0.5) 45%, rgba(0,0,0,0) 80%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 99;
+  transition: opacity 0.08s ease-out;
+}
+
+.screen-flash.active {
+  opacity: 1;
+}
+
+/* Screen Shake Animation */
+.shake {
+  animation: screenShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes screenShake {
+  10%, 90% { transform: translate3d(-3px, 2px, 0); }
+  20%, 80% { transform: translate3d(4px, -3px, 0); }
+  30%, 50%, 70% { transform: translate3d(-6px, 4px, 0); }
+  40%, 60% { transform: translate3d(6px, -4px, 0); }
+}
+
+/* --------------------------------------------------------------------------
+   3. String of Glowing Lights (Along the Top Edge)
+   -------------------------------------------------------------------------- */
+.festive-light-string {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  overflow: hidden;
+  z-index: 10;
+  padding: 0 8px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+.festive-light-string::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 215, 0, 0.35);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.light-bulb {
+  position: relative;
+  width: 9px;
+  height: 14px;
+  border-radius: 50% 50% 45% 45%;
+  margin-top: 4px;
+  animation: bulbGlow 2.4s infinite alternate ease-in-out;
+}
+
+.light-bulb:nth-child(4n + 1) { background: #ffd700; animation-delay: 0s; }
+.light-bulb:nth-child(4n + 2) { background: #ff1744; animation-delay: 0.6s; }
+.light-bulb:nth-child(4n + 3) { background: #00e5ff; animation-delay: 1.2s; }
+.light-bulb:nth-child(4n + 4) { background: #76ff03; animation-delay: 1.8s; }
+
+@keyframes bulbGlow {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   4. Top Bar & Sound Toggle
+   -------------------------------------------------------------------------- */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  position: relative;
+  z-index: 10;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold-light);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.sound-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(28, 14, 52, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  color: var(--text-gold);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--tr-fast);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.sound-toggle-btn:hover,
+.sound-toggle-btn:focus-visible {
+  border-color: var(--gold-primary);
+  background: rgba(48, 20, 88, 0.95);
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.3);
+  outline: none;
+}
+
+.sound-toggle-btn.muted {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   5. PAGE 1: CRACKER EXPLOSION PAGE (index.html)
+   -------------------------------------------------------------------------- */
+.cracker-page-wrapper {
+  position: relative;
+  z-index: 5;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cracker-header {
+  margin-top: 10px;
+  padding: 0 8px;
+}
+
+.cracker-title {
+  font-family: var(--font-decorative);
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  font-weight: 700;
+  color: #fff8e7;
+  text-shadow: 
+    0 0 12px rgba(255, 215, 0, 0.8),
+    0 0 26px rgba(255, 109, 0, 0.5),
+    0 0 45px rgba(233, 30, 99, 0.4);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.cracker-tamil-title {
+  font-family: var(--font-tamil);
+  font-size: clamp(1.1rem, 4vw, 1.45rem);
+  color: var(--gold-warm);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-shadow: 0 0 10px rgba(255, 179, 0, 0.5);
+  margin-bottom: 8px;
+}
+
+.cracker-instruction {
+  font-size: clamp(0.92rem, 2.8vw, 1.05rem);
+  color: var(--text-muted);
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* Firecracker Center Stage */
+.cracker-stage {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 20px 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Cracker Interactive Element */
+.cracker-unit {
+  position: relative;
+  width: 140px;
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.25s ease;
+}
+
+/* Hint Animation: Gentle Pulsing Scale */
+.cracker-unit.hint-glow {
+  animation: crackerPulseHint 2.6s infinite ease-in-out;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.65));
+}
+
+@keyframes crackerPulseHint {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+/* Cracker Fuse and Spark Tip */
+.cracker-fuse-wrap {
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 52px;
+}
+
+.fuse-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.fuse-rope {
+  fill: none;
+  stroke: #8d6e63;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+/* Animated Fuse Spark */
+.fuse-spark-point {
+  position: absolute;
+  top: 2px;
+  right: 14px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #ffd700 40%, #ff5722 80%, transparent 100%);
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 0 14px #ffd700, 0 0 24px #ff5722;
+}
+
+/* Sparking Active State (when user clicks) */
+.cracker-unit.sparking .fuse-spark-point {
+  opacity: 1;
+  animation: sparkSizzle 0.12s infinite alternate ease-in-out;
+}
+
+@keyframes sparkSizzle {
+  0% { transform: scale(0.9) translate(0, 0); filter: brightness(1); }
+  100% { transform: scale(1.4) translate(1px, -1px); filter: brightness(1.6); }
+}
+
+/* Cracker Body (Main Cylinder) */
+.cracker-body {
+  position: relative;
+  width: 100px;
+  height: 170px;
+  background: linear-gradient(135deg, #e53935 0%, #c62828 50%, #b71c1c 100%);
+  border-radius: 12px 12px 8px 8px;
+  box-shadow: inset 4px 0 10px rgba(255, 255, 255, 0.25), inset -6px 0 14px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 0;
+  overflow: hidden;
+}
+
+.cracker-gold-band {
+  width: 100%;
+  height: 16px;
+  background: linear-gradient(90deg, #ffd700 0%, #ffe082 50%, #d4af37 100%);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.cracker-tamil-label {
+  font-family: var(--font-tamil);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #ffd700;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 1px;
+}
+
+.cracker-english-label {
+  font-family: var(--font-decorative);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+/* Ground Pedestal / Shadow */
+.cracker-ground-shadow {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.8) 0%, rgba(255, 109, 0, 0.15) 50%, transparent 80%);
+}
+
+/* Exploded Cracker Hidden State */
+.cracker-unit.exploded {
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+}
+
+/* Post-Explosion Action Controls */
+.post-explosion-actions {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-explosion-actions.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.tap-again-hint {
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  letter-spacing: 0.3px;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   6. PAGE 2: WISHES & CELEBRATION PAGE (wishes.html)
+   -------------------------------------------------------------------------- */
+.wishes-page-wrapper {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 16px 36px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  padding: 14px 8px 20px;
+}
+
+.hero-title {
+  font-family: var(--font-decorative);
+  font-size: clamp(2.3rem, 8vw, 3.8rem);
+  font-weight: 700;
+  color: #fff8e7;
+  text-shadow: 
+    0 0 12px rgba(255, 215, 0, 0.8),
+    0 0 28px rgba(255, 153, 0, 0.6),
+    0 0 45px rgba(233, 30, 99, 0.4);
+  animation: heroGlow 3.5s ease-in-out infinite alternate;
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+@keyframes heroGlow {
+  0% {
+    text-shadow:
+      0 0 10px rgba(255, 215, 0, 0.7),
+      0 0 20px rgba(255, 153, 0, 0.4),
+      0 0 35px rgba(233, 30, 99, 0.25);
+  }
+  100% {
+    text-shadow:
+      0 0 18px rgba(255, 235, 120, 0.95),
+      0 0 34px rgba(255, 179, 0, 0.8),
+      0 0 58px rgba(233, 30, 99, 0.6);
+  }
+}
+
+.hero-tamil-sub {
+  font-family: var(--font-tamil);
+  font-size: clamp(1.15rem, 4.2vw, 1.55rem);
+  color: var(--gold-warm);
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-shadow: 0 0 12px rgba(255, 179, 0, 0.6);
+}
+
+.personalized-greeting-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.16), rgba(233, 30, 99, 0.22));
+  border: 1px solid rgba(255, 215, 0, 0.42);
+  border-radius: 999px;
+  padding: 8px 20px;
+  margin: 6px auto 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.personalized-greeting-text {
+  font-size: clamp(1rem, 3.4vw, 1.25rem);
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   7. Animated Diya (Oil Lamp)
+   -------------------------------------------------------------------------- */
+.diya-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0 18px;
+  position: relative;
+}
+
+.diya-container {
+  position: relative;
+  width: 180px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--tr-smooth);
+}
+
+.diya-container:hover,
+.diya-container:focus-visible {
+  transform: scale(1.05);
+}
+
+.diya-aura {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 179, 0, 0.4) 0%, rgba(255, 87, 34, 0.18) 50%, transparent 80%);
+  pointer-events: none;
+  animation: diyaAuraPulse 3.5s infinite ease-in-out alternate;
+}
+
+@keyframes diyaAuraPulse {
+  0% { transform: translateX(-50%) scale(0.95); opacity: 0.8; }
+  100% { transform: translateX(-50%) scale(1.05); opacity: 1; }
+}
+
+.diya-flame-box {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 84px;
+  z-index: 4;
+}
+
+.diya-flame-svg {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 90%;
+  animation: diyaFlameFlicker 2s infinite ease-in-out alternate;
+  filter: drop-shadow(0 0 10px rgba(255, 179, 0, 0.7));
+}
+
+@keyframes diyaFlameFlicker {
+  0% { transform: scale(1) rotate(-1.5deg); }
+  25% { transform: scale(1.04, 0.96) rotate(1.5deg); }
+  50% { transform: scale(0.97, 1.05) rotate(-1deg); }
+  75% { transform: scale(1.03, 0.98) rotate(0.8deg); }
+  100% { transform: scale(1.01, 1.01) rotate(1.2deg); }
+}
+
+.diya-lamp-box {
+  position: relative;
+  width: 170px;
+  height: 75px;
+  z-index: 3;
+}
+
+.diya-lamp-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65));
+}
+
+.diya-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  letter-spacing: 0.3px;
+}
+
+/* --------------------------------------------------------------------------
+   8. Rangoli Pattern Divider
+   -------------------------------------------------------------------------- */
+.rangoli-divider {
+  width: 100%;
+  max-width: 440px;
+  margin: 12px auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.rangoli-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+}
+
+.rangoli-center-motif {
+  width: 32px;
+  height: 32px;
+  fill: var(--gold-primary);
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
+}
+
+/* --------------------------------------------------------------------------
+   9. Countdown to Diwali Section
+   -------------------------------------------------------------------------- */
+.countdown-card {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.countdown-title {
+  font-family: var(--font-decorative);
+  font-size: 1.35rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.countdown-subtitle {
+  font-size: 0.85rem;
+  color: var(--gold-warm);
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+}
+
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.timer-box {
+  background: rgba(14, 7, 28, 0.75);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 14px;
+  padding: 12px 6px;
+  box-shadow: inset 0 0 14px rgba(255, 215, 0, 0.05);
+}
+
+.timer-num {
+  font-family: var(--font-decorative);
+  font-size: clamp(1.4rem, 4.5vw, 2rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.timer-label {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.8px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Diwali Today Banner (when countdown expires) */
+.diwali-today-banner {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(233, 30, 99, 0.35));
+  border: 1px solid var(--gold-primary);
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 12px var(--gold-primary);
+  display: none;
+  animation: todayPulse 2s infinite alternate;
+}
+
+@keyframes todayPulse {
+  0% { transform: scale(0.98); }
+  100% { transform: scale(1.02); }
+}
+
+/* --------------------------------------------------------------------------
+   11. Reusable Card Surface (Glassmorphic)
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 22px 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: border-color var(--tr-smooth), box-shadow var(--tr-smooth);
+}
+
+.card:hover {
+  border-color: var(--card-border-hover);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 215, 0, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   12. Wishes Section & Quote Box
+   -------------------------------------------------------------------------- */
+.wish-content-box {
+  background: rgba(10, 5, 22, 0.65);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 14px;
+  padding: 20px 18px;
+  margin-bottom: 18px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.wish-quote {
+  font-size: clamp(1rem, 3.2vw, 1.15rem);
+  color: #fff;
+  font-weight: 400;
+  line-height: 1.6;
+  font-style: normal;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  word-break: break-word;
+}
+
+.wish-quote.fading {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.wish-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 215, 0, 0.15);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.wish-lang-badge {
+  background: rgba(233, 30, 99, 0.25);
+  border: 1px solid rgba(233, 30, 99, 0.5);
+  color: #ff80ab;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   13. Form & Share Generator
+   -------------------------------------------------------------------------- */
+.wish-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-gold);
+  letter-spacing: 0.3px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 480px) {
+  .input-wrapper {
+    flex-direction: row;
+  }
+  .input-wrapper .form-input {
+    flex: 1;
+  }
+}
+
+.form-input {
+  background: rgba(10, 5, 22, 0.75);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all var(--tr-fast);
+  outline: none;
+  min-height: 46px;
+}
+
+.form-input:focus {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.3);
+  background: rgba(18, 9, 38, 0.9);
+}
+
+.form-input::placeholder {
+  color: rgba(209, 199, 224, 0.5);
+}
+
+.share-box {
+  background: rgba(10, 5, 22, 0.65);
+  border: 1px solid rgba(255, 215, 0, 0.18);
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.link-display-wrap {
+  margin: 8px 0 16px;
+}
+
+.link-input {
+  width: 100%;
+  background: rgba(6, 3, 14, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: var(--gold-light);
+  outline: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.share-buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 480px) {
+  .share-buttons-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Button Styles System
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 12px 22px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--tr-fast);
+  outline: none;
+  user-select: none;
+  min-height: 46px; /* Touch target >= 44px */
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--gold-primary);
+  outline-offset: 2px;
+}
+
+/* Primary Button (Gold to Orange to Magenta Gradient) */
+.btn-primary {
+  background: linear-gradient(135deg, #ffb300 0%, #ff6d00 50%, #e91e63 100%);
+  color: #0b0517;
+  box-shadow: 0 4px 18px rgba(255, 109, 0, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255, 109, 0, 0.6);
+  filter: brightness(1.08);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* Gold Button */
+.btn-gold {
+  background: linear-gradient(135deg, #ffd700 0%, #ffa000 100%);
+  color: #080312;
+  box-shadow: 0 4px 16px rgba(255, 215, 0, 0.35);
+  white-space: nowrap;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+}
+
+/* Native Web Share Button */
+.btn-share {
+  background: linear-gradient(135deg, #9c27b0 0%, #e91e63 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.35);
+}
+
+.btn-share:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 22px rgba(233, 30, 99, 0.5);
+}
+
+/* WhatsApp Brand Button */
+.btn-whatsapp {
+  background: #25d366;
+  color: #052410;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+}
+
+.btn-whatsapp:hover {
+  background: #20bd5a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(37, 211, 102, 0.5);
+}
+
+/* Outline Button */
+.btn-outline {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  color: var(--gold-light);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 215, 0, 0.14);
+  border-color: var(--gold-primary);
+  transform: translateY(-2px);
+}
+
+/* Continue to Wishes Button on Page 1 */
+.btn-continue {
+  background: linear-gradient(135deg, #ffd700 0%, #ff6d00 50%, #e91e63 100%);
+  color: #0b0517;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 999px;
+  box-shadow: 0 6px 24px rgba(255, 109, 0, 0.55), 0 0 20px rgba(255, 215, 0, 0.4);
+  animation: continuePulse 2s infinite alternate ease-in-out;
+}
+
+@keyframes continuePulse {
+  0% { transform: scale(1); box-shadow: 0 6px 24px rgba(255, 109, 0, 0.55); }
+  100% { transform: scale(1.05); box-shadow: 0 8px 32px rgba(255, 215, 0, 0.7); }
+}
+
+/* --------------------------------------------------------------------------
+   15. Toast Notification
+   -------------------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: linear-gradient(135deg, rgba(25, 12, 48, 0.96), rgba(46, 17, 74, 0.96));
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-light);
+  padding: 12px 22px;
+  border-radius: 999px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 215, 0, 0.35);
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   16. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  text-align: center;
+  padding: 26px 10px 10px;
+  color: var(--text-muted);
+}
+
+.footer-lights {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  letter-spacing: 6px;
+}
+
+.footer-credit {
+  font-size: 0.92rem;
+  color: var(--text-main);
+  letter-spacing: 0.3px;
+}
+
+.footer-credit strong {
+  color: var(--gold-primary);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   17. Accessibility: Prefers Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .shake {
+    animation: none !important;
+  }
+
+  .hero-title {
+    animation: none !important;
+    text-shadow: 0 0 16px rgba(255, 215, 0, 0.7);
+  }
+
+  .diya-flame-svg,
+  .diya-aura,
+  .light-bulb,
+  .btn-continue,
+  .cracker-unit.hint-glow {
+    animation: none !important;
+  }
+}

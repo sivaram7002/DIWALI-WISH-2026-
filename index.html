@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tap the festive Diwali cracker to ignite fireworks and celebrate the Festival of Lights! Happy Diwali & இனிய தீபாவளி நல்வாழ்த்துக்கள்!">
+  <meta name="theme-color" content="#060817">
+
+  <!-- Open Graph Meta Tags for WhatsApp & Social Sharing -->
+  <meta property="og:title" content="🎆 Tap the Diwali Cracker! | Happy Diwali 🪔">
+  <meta property="og:description" content="Touch the cracker to spark the fuse, watch the grand sky explosion, and receive personalized Diwali wishes!">
+  <meta property="og:type" content="website">
+
+  <title>Happy Diwali | Tap the Cracker! 🎆</title>
+
+  <!-- Google Fonts: Cinzel Decorative, Noto Sans Tamil & Outfit (Latin & Tamil Subsets Only) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Noto+Sans+Tamil:wght@400;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet (Relative Path for GitHub Pages & Local file://) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body id="page-body">
+
+  <!-- String of Glowing Lights Along the Top Edge -->
+  <div class="festive-light-string" aria-hidden="true">
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+  </div>
+
+  <!-- Screen Flash Overlay for Explosions -->
+  <div id="screen-flash" class="screen-flash" aria-hidden="true"></div>
+
+  <!-- Background Fireworks Canvas -->
+  <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+
+  <!-- Twinkling Ambient Stars -->
+  <div class="stars-layer" aria-hidden="true"></div>
+
+  <!-- Falling Sweets Figures Container (Falling from Up to Down) -->
+  <div id="falling-sweets-container" class="falling-sweets-layer" aria-hidden="true"></div>
+
+  <!-- Top Utility Bar -->
+  <header class="top-bar">
+    <a href="index.html" class="site-brand" aria-label="Happy Diwali Home">
+      <span>🪔</span>
+      <span>Diwali 2026</span>
+    </a>
+
+    <!-- Sound Toggle Button (Remembers Choice in localStorage) -->
+    <button class="sound-toggle-btn" aria-label="Toggle sound effects" title="Toggle Sound">
+      <span class="sound-icon">🔊</span>
+      <span class="sound-label">Sound On</span>
+    </button>
+  </header>
+
+  <!-- Main Cracker Interactive Stage -->
+  <main class="cracker-page-wrapper">
+    <div class="cracker-header">
+      <h1 class="cracker-title">Tap the Cracker! 🎆</h1>
+      <p class="cracker-tamil-title">பட்டாசைத் தொட்டு வெடிக்கச் செய்யுங்கள்!</p>
+      <p class="cracker-instruction">Touch the cracker to spark the fuse and launch a grand explosion in the sky!</p>
+    </div>
+
+    <!-- Firecracker Container with Pedestal and Fuse -->
+    <div class="cracker-stage" id="cracker-stage">
+      
+      <!-- Ground Shadow -->
+      <div class="cracker-ground-shadow" aria-hidden="true"></div>
+
+      <!-- Firecracker Unit with Visible Fuse and Spark Point -->
+      <div class="cracker-unit hint-glow" id="cracker-unit" role="button" tabindex="0" aria-label="Interactive Firecracker. Click or tap to light the fuse and explode.">
+        
+        <!-- Visible Fuse SVG -->
+        <div class="cracker-fuse-wrap" aria-hidden="true">
+          <svg class="fuse-svg" viewBox="0 0 70 52">
+            <path class="fuse-rope" d="M 35 50 Q 30 25 50 15 T 48 4" />
+          </svg>
+          <!-- Spark Point at the end of the fuse -->
+          <div class="fuse-spark-point" id="fuse-spark" aria-hidden="true"></div>
+        </div>
+
+        <!-- Main Firecracker Body (Cylinder with Gold Bands) -->
+        <div class="cracker-body">
+          <div class="cracker-gold-band" aria-hidden="true"></div>
+          <span class="cracker-tamil-label">தீபாவளி</span>
+          <span class="cracker-english-label">CRACKER</span>
+          <div class="cracker-gold-band" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- Post-Explosion Action Controls (Fade in after explosion) -->
+      <div class="post-explosion-actions" id="post-explosion-actions">
+        <a id="continue-btn" href="wishes.html" class="btn btn-continue" aria-label="Continue to Diwali wishes celebration page">
+          <span>Continue to Wishes →</span>
+        </a>
+        <button id="btn-1000-wala" class="btn btn-outline" aria-label="Burst 1000 wala firecrackers around the frame">
+          <span>🧨 Burst 1000 Wala Around Frame</span>
+        </button>
+        <span class="tap-again-hint" id="tap-again-btn" role="button" tabindex="0">
+          ✨ Tap the cracker again for another explosion!
+        </span>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-lights" aria-hidden="true">🪔 ✨ 🎆 ✨ 🪔</div>
+      <p class="footer-credit">Made with love by <strong>Sivaram S K</strong></p>
+    </footer>
+  </main>
+
+  <!-- Scripts (Relative Paths for GitHub Pages) -->
+  <script src="sound.js"></script>
+  <script src="fireworks.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const crackerUnit = document.getElementById('cracker-unit');
+      const crackerStage = document.getElementById('cracker-stage');
+      const pageBody = document.getElementById('page-body');
+      const screenFlash = document.getElementById('screen-flash');
+      const postActions = document.getElementById('post-explosion-actions');
+      const continueBtn = document.getElementById('continue-btn');
+      const tapAgainBtn = document.getElementById('tap-again-btn');
+      const btn1000Wala = document.getElementById('btn-1000-wala');
+
+      let isExploding = false;
+
+      // Forward any ?to= parameter from Page 1 to Page 2
+      const urlParams = new URLSearchParams(window.location.search);
+      const recipientName = urlParams.get('to') || urlParams.get('name');
+      if (recipientName && continueBtn) {
+        continueBtn.href = `wishes.html?to=${encodeURIComponent(recipientName.trim())}`;
+      }
+
+      // Initialize Fireworks Canvas Engine & Background Show
+      if (window.DiwaliFireworks) {
+        window.DiwaliFireworks.init('fireworks-canvas');
+        window.DiwaliFireworks.startContinuousShow(2400);
+      }
+
+      // Falling Sweets Figures Animation
+      function initFallingSweets() {
+        const container = document.getElementById('falling-sweets-container');
+        if (!container) return;
+
+        const SWEET_ICONS = ['🟡', '🌀', '🟤', '🧈', '🥮', '🥨', '💎', '🍮'];
+        const MAX_CONCURRENT = 10;
+        let activeCount = 0;
+
+        function spawnSweet() {
+          if (document.hidden || activeCount >= MAX_CONCURRENT) return;
+
+          const sweet = document.createElement('span');
+          sweet.className = 'falling-sweet';
+          sweet.textContent = SWEET_ICONS[Math.floor(Math.random() * SWEET_ICONS.length)];
+
+          const startLeft = Math.random() * 92 + 2;
+          const size = Math.random() * 10 + 20;
+          const duration = Math.random() * 3 + 5;
+          const driftX = (Math.random() * 60 - 30) + 'px';
+          const spin = (Math.random() * 540 - 270) + 'deg';
+
+          sweet.style.left = startLeft + 'vw';
+          sweet.style.fontSize = size + 'px';
+          sweet.style.animationDuration = duration + 's';
+          sweet.style.setProperty('--drift-x', driftX);
+          sweet.style.setProperty('--spin', spin);
+
+          activeCount++;
+          container.appendChild(sweet);
+
+          sweet.addEventListener('animationend', () => {
+            sweet.remove();
+            activeCount--;
+          }, { once: true });
+        }
+
+        setInterval(spawnSweet, 950);
+      }
+
+      function triggerCrackerExplosion() {
+        if (isExploding) return;
+        isExploding = true;
+
+        crackerUnit.classList.remove('hint-glow');
+        crackerUnit.classList.add('sparking');
+
+        if (window.DiwaliSound) {
+          window.DiwaliSound.playFuseSpark(1000);
+        }
+
+        setTimeout(() => {
+          explodeCracker();
+        }, 1000);
+      }
+
+      function explodeCracker() {
+        crackerUnit.classList.remove('sparking');
+        crackerUnit.classList.add('exploded');
+
+        if (window.DiwaliSound) {
+          window.DiwaliSound.playBoom(1.0);
+          window.DiwaliSound.playCrackle();
+        }
+
+        screenFlash.classList.add('active');
+        setTimeout(() => {
+          screenFlash.classList.remove('active');
+        }, 120);
+
+        pageBody.classList.add('shake');
+        setTimeout(() => {
+          pageBody.classList.remove('shake');
+        }, 400);
+
+        // Center explosion burst
+        const rect = crackerUnit.getBoundingClientRect();
+        const burstX = rect.left + rect.width / 2;
+        const burstY = rect.top + 20;
+
+        window.DiwaliFireworks.burst(burstX, burstY, 30, '#ffd700');
+        setTimeout(() => {
+          window.DiwaliFireworks.burst(burstX + (Math.random() * 60 - 30), burstY - 50, 22, '#e91e63');
+        }, 160);
+
+        // 1000 Wala Firecracker Garland bursting all around the screen frame!
+        setTimeout(() => {
+          if (window.DiwaliFireworks.burst1000WalaAroundFrame) {
+            window.DiwaliFireworks.burst1000WalaAroundFrame();
+          }
+        }, 250);
+
+        // Fade in action controls
+        setTimeout(() => {
+          postActions.classList.add('visible');
+        }, 500);
+
+        // Respawn cracker after 1.8s
+        setTimeout(() => {
+          crackerUnit.classList.remove('exploded');
+          crackerUnit.classList.add('hint-glow');
+          isExploding = false;
+        }, 1800);
+      }
+
+      // Event listeners
+      crackerUnit.addEventListener('click', (e) => {
+        e.stopPropagation();
+        triggerCrackerExplosion();
+      });
+
+      crackerUnit.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          triggerCrackerExplosion();
+        }
+      });
+
+      if (tapAgainBtn) {
+        tapAgainBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          triggerCrackerExplosion();
+        });
+      }
+
+      if (btn1000Wala) {
+        btn1000Wala.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (window.DiwaliFireworks.burst1000WalaAroundFrame) {
+            window.DiwaliFireworks.burst1000WalaAroundFrame();
+          }
+        });
+      }
+
+      initFallingSweets();
+    })();
+  </script>
+</body>
+</html>

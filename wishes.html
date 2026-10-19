@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Happy Diwali Wishes & Celebration! Personalized greeting, countdown to Diwali, traditional sweets, animated diya, and heartfelt blessings in English and Tamil.">
+  <meta name="theme-color" content="#060817">
+
+  <!-- Open Graph Meta Tags for WhatsApp & Social Sharing -->
+  <meta property="og:title" content="✨ Happy Diwali Wishes | Festival of Lights 🪔">
+  <meta property="og:description" content="A warm, sparkling Diwali greeting just for you! Light the diya, see the Diwali countdown, explore festive sweets, and send personalized wishes.">
+  <meta property="og:type" content="website">
+
+  <title>Happy Diwali Wishes | Festival of Lights 🪔</title>
+
+  <!-- Google Fonts: Cinzel Decorative, Noto Sans Tamil & Outfit (Latin & Tamil Subsets Only) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Noto+Sans+Tamil:wght@400;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet (Relative Path for GitHub Pages & Local file://) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- String of Glowing Lights Along the Top Edge -->
+  <div class="festive-light-string" aria-hidden="true">
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+  </div>
+
+  <!-- Background Fireworks Canvas -->
+  <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+
+  <!-- Twinkling Ambient Stars -->
+  <div class="stars-layer" aria-hidden="true"></div>
+
+  <!-- Falling Sweets Figures Container (Falling from Up to Down) -->
+  <div id="falling-sweets-container" class="falling-sweets-layer" aria-hidden="true"></div>
+
+  <!-- Top Utility Bar -->
+  <header class="top-bar">
+    <a href="index.html" class="site-brand" aria-label="Back to Cracker Page">
+      <span>🎆</span>
+      <span>Cracker Page</span>
+    </a>
+
+    <!-- Sound Toggle Button (Remembers Choice in localStorage) -->
+    <button class="sound-toggle-btn" aria-label="Toggle sound effects" title="Toggle Sound">
+      <span class="sound-icon">🔊</span>
+      <span class="sound-label">Sound On</span>
+    </button>
+  </header>
+
+  <!-- Main Wishes Experience Wrapper -->
+  <div class="wishes-page-wrapper">
+    <main>
+
+      <!-- 1. HERO SECTION -->
+      <section class="hero-section" id="hero">
+        <h1 class="hero-title">Happy Diwali</h1>
+        <p class="hero-tamil-sub">இனிய தீபாவளி நல்வாழ்த்துக்கள்</p>
+
+        <!-- Personalized Greeting Badge -->
+        <div class="personalized-greeting-badge" id="greeting-badge">
+          <span class="badge-spark" aria-hidden="true">🪔</span>
+          <span class="personalized-greeting-text" id="personalized-greeting">Happy Diwali to You &amp; Your Family!</span>
+          <span class="badge-spark" aria-hidden="true">🪔</span>
+        </div>
+
+        <!-- 1000 Wala Frame Burst Action Button -->
+        <div style="margin: 10px 0 6px;">
+          <button id="btn-1000-frame" class="btn btn-primary" aria-label="Burst 1000 wala firecrackers around the frame">
+            <span>🧨 Burst 1000 Wala Around Frame</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 7. DECORATION: ANIMATED DIYA WITH FLICKERING FLAME -->
+      <section class="diya-wrapper" aria-label="Sacred Diwali Diya Lamp">
+        <div class="diya-container" id="interactive-diya" role="button" tabindex="0" aria-label="Interactive Diya lamp. Click to shower blessing sparks.">
+          
+          <!-- Outer Ambient Glow Aura -->
+          <div class="diya-aura" aria-hidden="true"></div>
+
+          <!-- Flame SVG with Realistic Flickering Layers -->
+          <div class="diya-flame-box" aria-hidden="true">
+            <svg class="diya-flame-svg" viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="flameOuterGrad" cx="50%" cy="80%" r="60%">
+                  <stop offset="0%" stop-color="#fffb91" />
+                  <stop offset="35%" stop-color="#ff9d00" />
+                  <stop offset="70%" stop-color="#ff3d00" />
+                  <stop offset="100%" stop-color="#ff0044" stop-opacity="0" />
+                </radialGradient>
+                <radialGradient id="flameInnerGrad" cx="50%" cy="70%" r="50%">
+                  <stop offset="0%" stop-color="#ffffff" />
+                  <stop offset="45%" stop-color="#fff176" />
+                  <stop offset="85%" stop-color="#ff9800" />
+                  <stop offset="100%" stop-color="#ff5722" />
+                </radialGradient>
+                <radialGradient id="flameBaseGrad" cx="50%" cy="90%" r="40%">
+                  <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#3d5afe" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+              <path d="M 50 10 C 20 60 15 110 50 150 C 85 110 80 60 50 10 Z" fill="url(#flameOuterGrad)" />
+              <path d="M 50 35 C 32 75 30 115 50 145 C 70 115 68 75 50 35 Z" fill="url(#flameInnerGrad)" />
+              <ellipse cx="50" cy="144" rx="14" ry="7" fill="url(#flameBaseGrad)" />
+            </svg>
+          </div>
+
+          <!-- Terracotta Brass Diya Lamp Body (SVG) -->
+          <div class="diya-lamp-box" aria-hidden="true">
+            <svg class="diya-lamp-svg" viewBox="0 0 240 100" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="clayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ffd54f" />
+                  <stop offset="30%" stop-color="#d48806" />
+                  <stop offset="70%" stop-color="#873800" />
+                  <stop offset="100%" stop-color="#5a1e00" />
+                </linearGradient>
+                <linearGradient id="clayRimGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ffecb3" />
+                  <stop offset="50%" stop-color="#ffd54f" />
+                  <stop offset="100%" stop-color="#b78103" />
+                </linearGradient>
+              </defs>
+              <ellipse cx="120" cy="92" rx="48" ry="8" fill="#3a1500" opacity="0.6" />
+              <path d="M 90 85 Q 120 95 150 85 L 140 92 Q 120 96 100 92 Z" fill="url(#clayGrad)" />
+              <path d="M 20 30 Q 120 115 220 30 Q 120 70 20 30 Z" fill="url(#clayGrad)" />
+              <ellipse cx="120" cy="30" rx="100" ry="12" fill="url(#clayRimGrad)" />
+              <ellipse cx="120" cy="32" rx="82" ry="7" fill="#8d3d00" />
+              <path d="M 118 32 C 117 26 120 22 120 18" stroke="#372007" stroke-width="3.5" stroke-linecap="round" fill="none" />
+              <circle cx="120" cy="18" r="2.5" fill="#1f1103" />
+            </svg>
+          </div>
+        </div>
+        <p class="diya-hint">Tap the diya for sparkling blessings ✨</p>
+      </section>
+
+      <!-- 7. DECORATION: RANGOLI-STYLE SVG DIVIDER -->
+      <div class="rangoli-divider" aria-hidden="true">
+        <span class="rangoli-line"></span>
+        <svg class="rangoli-center-motif" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4" />
+          <circle cx="20" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2" />
+          <path d="M 20 0 L 23 15 L 38 18 L 25 25 L 28 40 L 17 28 L 3 32 L 14 20 Z" fill="currentColor" opacity="0.8" />
+        </svg>
+        <span class="rangoli-line"></span>
+      </div>
+
+      <!-- 2. COUNTDOWN TO DIWALI (8 NOVEMBER 2026, 00:00 IST) -->
+      <section class="card countdown-card" aria-label="Diwali Countdown">
+        <h2 class="countdown-title">Countdown to Diwali 2026</h2>
+        <p class="countdown-subtitle">8 November 2026, 00:00 IST (Indian Standard Time)</p>
+        
+        <div class="countdown-grid" id="countdown-grid">
+          <div class="timer-box">
+            <div class="timer-num" id="cd-days">00</div>
+            <div class="timer-label">Days</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="cd-hours">00</div>
+            <div class="timer-label">Hours</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="cd-minutes">00</div>
+            <div class="timer-label">Minutes</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="cd-seconds">00</div>
+            <div class="timer-label">Seconds</div>
+          </div>
+        </div>
+
+        <!-- Replaces timer when Diwali arrives -->
+        <div class="diwali-today-banner" id="diwali-today-banner">
+          It's Diwali today! 🪔✨
+        </div>
+      </section>
+
+
+      <!-- 6. WISHES SECTION (ENGLISH & TAMIL ONLY) -->
+      <section class="card wishes-card" id="wishes-section" aria-label="Festive Diwali Wishes">
+        <div class="section-head">
+          <span class="section-tag">✨ Auspicious Blessings</span>
+          <h2 class="section-title">Diwali Wish of the Moment</h2>
+        </div>
+
+        <div class="wish-content-box">
+          <blockquote class="wish-quote" id="wish-quote-display">
+            <!-- Dynamically populated by script.js -->
+            "May the divine light of Diwali bring peace, prosperity, and happiness to you and your loved ones."
+          </blockquote>
+          <div class="wish-meta">
+            <span class="wish-lang-badge" id="wish-lang-badge">English</span>
+            <span class="wish-counter" id="wish-counter">Wish 1 of 16</span>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button id="new-wish-btn" class="btn btn-primary" aria-label="Show another random Diwali wish">
+            <span class="btn-icon">🔀</span>
+            <span>New Wish</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 8. PERSONALIZED WISH GENERATOR & SHARE -->
+      <section class="card generator-card" id="share-section" aria-label="Create and Share Custom Greeting">
+        <div class="section-head">
+          <span class="section-tag">💌 Spread the Joy</span>
+          <h2 class="section-title">Send a Personalized Wish</h2>
+          <p class="card-desc">Type your friend or family member's name to generate a custom greeting link you can send them!</p>
+        </div>
+
+        <form id="create-wish-form" class="wish-form" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="name-input" class="form-label">Recipient's Name</label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                id="name-input" 
+                class="form-input" 
+                placeholder="Enter recipient's name..." 
+                maxlength="40" 
+                autocomplete="off"
+                required
+              >
+              <button type="submit" id="generate-link-btn" class="btn btn-gold" aria-label="Generate customized greeting link">
+                <span>Create Link</span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Generated Link Output -->
+        <div class="share-box" id="share-box">
+          <label for="generated-link-input" class="form-label">Your Shareable Greeting Link</label>
+          <div class="link-display-wrap">
+            <input type="text" id="generated-link-input" class="link-input" readonly value="" aria-label="Generated shareable link">
+          </div>
+
+          <!-- Share Action Buttons -->
+          <div class="share-buttons-grid">
+            <button id="native-share-btn" class="btn btn-share" aria-label="Share via device share sheet">
+              <span class="btn-icon">📲</span>
+              <span>Share Link</span>
+            </button>
+
+            <a id="whatsapp-share-btn" class="btn btn-whatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share this wish on WhatsApp">
+              <svg class="wa-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.78 14.18c-.24.68-1.4 1.28-1.94 1.35-.5.06-1.14.09-3.26-.79-2.58-1.07-4.22-3.69-4.35-3.86-.13-.18-1.05-1.4-1.05-2.67s.67-1.89.91-2.15c.24-.26.53-.33.71-.33.18 0 .36 0 .52.01.17.01.4.06.6.53.21.49.71 1.74.77 1.87.06.13.1.28.01.45-.09.18-.13.29-.26.44-.13.15-.28.34-.4.46-.13.13-.26.27-.11.53.15.26.67 1.1 1.44 1.78.99.88 1.83 1.15 2.09 1.28.26.13.42.11.57-.06.16-.18.67-.78.85-1.05.18-.27.36-.22.61-.13.25.09 1.58.74 1.85.88.27.13.45.2.52.31.06.11.06.66-.18 1.34z"/>
+              </svg>
+              <span>Share on WhatsApp</span>
+            </a>
+
+            <button id="copy-link-btn" class="btn btn-outline" aria-label="Copy greeting link to clipboard">
+              <span class="btn-icon">📋</span>
+              <span id="copy-btn-text">Copy Link</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Toast Notification for Link Copying & Events -->
+    <div id="toast" class="toast" role="status" aria-live="polite">
+      <span class="toast-sparkle">✨</span>
+      <span id="toast-message">Link copied to clipboard!</span>
+    </div>
+
+    <!-- 9. FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-lights" aria-hidden="true">🪔 ✨ 🎆 ✨ 🪔</div>
+      <p class="footer-credit">Made with love by <strong>Sivaram S K</strong></p>
+    </footer>
+
+  </div>
+
+  <!-- Scripts (Relative Paths for GitHub Pages) -->
+  <script src="sound.js"></script>
+  <script src="fireworks.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
