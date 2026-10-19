@@ -56,8 +56,8 @@
     filter.frequency.setValueAtTime(2500, ctx.currentTime);
 
     const gainNode = ctx.createGain();
-    gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.35, ctx.currentTime + duration * 0.8);
+    gainNode.gain.setValueAtTime(0.06, ctx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.12, ctx.currentTime + duration * 0.8);
     gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
 
     noise.connect(filter);
@@ -86,7 +86,7 @@
     osc.frequency.setValueAtTime(160, now);
     osc.frequency.exponentialRampToValueAtTime(32, now + 0.45);
 
-    oscGain.gain.setValueAtTime(0.7 * level, now);
+    oscGain.gain.setValueAtTime(0.24 * level, now);
     oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
 
     osc.connect(oscGain);
@@ -114,7 +114,7 @@
     filter.frequency.exponentialRampToValueAtTime(80, now + noiseDuration);
 
     const noiseGain = ctx.createGain();
-    noiseGain.gain.setValueAtTime(0.6 * level, now);
+    noiseGain.gain.setValueAtTime(0.18 * level, now);
     noiseGain.gain.exponentialRampToValueAtTime(0.001, now + noiseDuration);
 
     noise.connect(filter);
@@ -142,9 +142,9 @@
     osc.frequency.setValueAtTime(380, now);
     osc.frequency.exponentialRampToValueAtTime(1200, now + duration);
 
-    // Keep it subtle, not piercing
+    // Keep it subtle, soft and gentle
     gainNode.gain.setValueAtTime(0.001, now);
-    gainNode.gain.linearRampToValueAtTime(0.12, now + duration * 0.4);
+    gainNode.gain.linearRampToValueAtTime(0.035, now + duration * 0.4);
     gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
     osc.connect(gainNode);
@@ -171,7 +171,7 @@
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(600 + Math.random() * 1200, now + delay);
 
-      gain.gain.setValueAtTime(0.05, now + delay);
+      gain.gain.setValueAtTime(0.016, now + delay);
       gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.04);
 
       osc.connect(gain);
@@ -252,7 +252,7 @@
     osc.frequency.setValueAtTime(320 + Math.random() * 450, now);
     osc.frequency.exponentialRampToValueAtTime(75, now + 0.04);
 
-    gain.gain.setValueAtTime(0.22, now);
+    gain.gain.setValueAtTime(0.07, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
 
     osc.connect(gain);
@@ -276,7 +276,7 @@
     osc.type = 'sine';
     osc.frequency.setValueAtTime(240, now);
     osc.frequency.exponentialRampToValueAtTime(28, now + 0.6);
-    oscGain.gain.setValueAtTime(0.95, now);
+    oscGain.gain.setValueAtTime(0.35, now);
     oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
     osc.connect(oscGain);
     oscGain.connect(ctx.destination);
@@ -298,7 +298,7 @@
     filter.frequency.setValueAtTime(1100, now);
     filter.frequency.exponentialRampToValueAtTime(60, now + noiseDuration);
     const noiseGain = ctx.createGain();
-    noiseGain.gain.setValueAtTime(0.85, now);
+    noiseGain.gain.setValueAtTime(0.28, now);
     noiseGain.gain.exponentialRampToValueAtTime(0.001, now + noiseDuration);
     noise.connect(filter);
     filter.connect(noiseGain);
@@ -327,9 +327,9 @@
     filter.type = 'highpass';
     filter.frequency.setValueAtTime(2000, now);
     const gainNode = ctx.createGain();
-    gainNode.gain.setValueAtTime(0.05, now);
-    gainNode.gain.linearRampToValueAtTime(0.35, now + 0.3);
-    gainNode.gain.linearRampToValueAtTime(0.32, now + duration * 0.75);
+    gainNode.gain.setValueAtTime(0.02, now);
+    gainNode.gain.linearRampToValueAtTime(0.10, now + 0.3);
+    gainNode.gain.linearRampToValueAtTime(0.09, now + duration * 0.75);
     gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
     noise.connect(filter);
     filter.connect(gainNode);
@@ -361,8 +361,8 @@
     lfoGain.gain.setValueAtTime(90, now);
     lfo.connect(osc.frequency);
 
-    masterGain.gain.setValueAtTime(0.01, now);
-    masterGain.gain.linearRampToValueAtTime(0.18, now + 0.2);
+    masterGain.gain.setValueAtTime(0.005, now);
+    masterGain.gain.linearRampToValueAtTime(0.06, now + 0.2);
     masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
     osc.connect(masterGain);
