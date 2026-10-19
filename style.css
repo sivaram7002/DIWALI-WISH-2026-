@@ -1071,6 +1071,143 @@ body {
 }
 
 /* --------------------------------------------------------------------------
+   Festive Interactive Crackers Station & Shelf
+   -------------------------------------------------------------------------- */
+.interactive-crackers-tray {
+  width: 100%;
+  max-width: 580px;
+  margin: 18px auto 8px;
+  background: rgba(18, 10, 34, 0.75);
+  border: 1px solid rgba(255, 215, 0, 0.28);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 16px rgba(255, 215, 0, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.tray-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+.tray-title {
+  font-family: var(--font-decorative);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff8e7;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.tray-tamil-sub {
+  font-family: var(--font-tamil);
+  font-size: 0.85rem;
+  color: var(--gold-warm);
+}
+
+.cracker-station-card {
+  margin-bottom: 22px;
+}
+
+.cracker-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+@media (min-width: 540px) {
+  .cracker-buttons-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+}
+
+.btn-cracker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px;
+  background: rgba(24, 14, 44, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.32);
+  border-radius: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all var(--tr-fast);
+  text-align: center;
+  gap: 4px;
+  min-height: 72px;
+}
+
+.btn-cracker:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 18px rgba(255, 215, 0, 0.35);
+  border-color: var(--gold-primary);
+  background: rgba(36, 20, 64, 0.95);
+}
+
+.btn-cracker:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.cracker-btn-icon {
+  font-size: 1.55rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+  transition: transform var(--tr-fast);
+}
+
+.btn-cracker:hover .cracker-btn-icon {
+  transform: scale(1.18);
+}
+
+.cracker-btn-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.cracker-btn-label strong {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff9e6;
+  letter-spacing: 0.3px;
+}
+
+.cracker-btn-label small {
+  font-family: var(--font-tamil);
+  font-size: 0.72rem;
+  color: var(--gold-light);
+  opacity: 0.9;
+}
+
+/* Specific cracker accent glow colors */
+.btn-anar:hover {
+  border-color: #ffb300;
+  box-shadow: 0 6px 24px rgba(255, 179, 0, 0.4), 0 0 16px rgba(255, 215, 0, 0.3);
+}
+
+.btn-chakra:hover {
+  border-color: #00e5ff;
+  box-shadow: 0 6px 24px rgba(0, 229, 255, 0.35), 0 0 16px rgba(0, 229, 255, 0.25);
+}
+
+.btn-sutli:hover {
+  border-color: #00e676;
+  box-shadow: 0 6px 24px rgba(0, 230, 118, 0.35), 0 0 16px rgba(255, 23, 68, 0.3);
+}
+
+.btn-1000:hover {
+  border-color: #ff1744;
+  box-shadow: 0 6px 24px rgba(255, 23, 68, 0.4), 0 0 16px rgba(255, 215, 0, 0.3);
+}
+
+/* --------------------------------------------------------------------------
    15. Toast Notification
    -------------------------------------------------------------------------- */
 .toast {

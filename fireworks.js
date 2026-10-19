@@ -31,29 +31,29 @@
   let isPaused = false;
   let continuousTimer = null;
 
-  // Higher active particle ceiling for rich, dense Diwali sky crackers
-  const MAX_ACTIVE_PARTICLES = 160;
+  // Higher active particle ceiling for dense, vibrant Diwali celebration
+  const MAX_ACTIVE_PARTICLES = 280;
 
   // Reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   class Particle {
-    constructor(x, y, color, velocity) {
+    constructor(x, y, color, velocity, customDecay, customGravity) {
       this.x = x;
       this.y = y;
       this.color = color;
-      this.radius = prefersReducedMotion ? 1.5 : (Math.random() * 1.6 + 1.2);
+      this.radius = prefersReducedMotion ? 1.5 : (Math.random() * 1.8 + 1.2);
       this.vx = velocity.x;
       this.vy = velocity.y;
-      this.gravity = 0.042;
-      this.friction = 0.955;
+      this.gravity = typeof customGravity === 'number' ? customGravity : 0.044;
+      this.friction = 0.958;
       this.alpha = 1;
-      this.decay = Math.random() * 0.018 + 0.014;
+      this.decay = typeof customDecay === 'number' ? customDecay : (Math.random() * 0.018 + 0.013);
     }
 
     draw(context) {
       context.save();
-      context.globalAlpha = this.alpha;
+      context.globalAlpha = Math.max(0, this.alpha);
       context.fillStyle = this.color;
       context.beginPath();
       context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
@@ -82,7 +82,7 @@
       const dx = targetX - startX;
       const dy = targetY - startY;
       const distance = Math.hypot(dx, dy);
-      const speed = Math.random() * 2.2 + 8.4;
+      const speed = Math.random() * 2.5 + 8.8;
 
       this.vx = (dx / distance) * speed;
       this.vy = (dy / distance) * speed;
@@ -93,12 +93,14 @@
       this.x += this.vx;
       this.y += this.vy;
 
-      if (Math.random() > 0.28) {
+      if (Math.random() > 0.22) {
         particles.push(new Particle(
           this.x + (Math.random() * 2 - 1),
           this.y + (Math.random() * 2 - 1),
-          Math.random() > 0.5 ? '#ffd700' : '#ff6d00',
-          { x: (Math.random() - 0.5) * 0.7, y: Math.random() * 1.8 + 1 }
+          Math.random() > 0.4 ? '#ffd700' : '#ff9100',
+          { x: (Math.random() - 0.5) * 0.7, y: Math.random() * 1.8 + 1 },
+          0.04,
+          0.02
         ));
       }
 
@@ -132,7 +134,7 @@
   }
 
   function burst(x, y, countOverride, colorOverride) {
-    const count = countOverride || (prefersReducedMotion ? 14 : 30);
+    const count = countOverride || (prefersReducedMotion ? 16 : (Math.floor(Math.random() * 12) + 36));
     const baseColor = colorOverride || PALETTES[Math.floor(Math.random() * PALETTES.length)];
 
     if (particles.length + count > MAX_ACTIVE_PARTICLES) {
@@ -140,13 +142,13 @@
     }
 
     for (let i = 0; i < count; i++) {
-      const angle = (Math.PI * 2 / count) * i + (Math.random() * 0.2 - 0.1);
-      const speed = Math.random() * 3.6 + 1.4;
+      const angle = (Math.PI * 2 / count) * i + (Math.random() * 0.25 - 0.125);
+      const speed = Math.random() * 4.2 + 1.6;
       const velocity = {
         x: Math.cos(angle) * speed,
         y: Math.sin(angle) * speed
       };
-      const sparkColor = Math.random() > 0.3 ? baseColor : '#ffffff';
+      const sparkColor = Math.random() > 0.25 ? baseColor : '#ffffff';
       particles.push(new Particle(x, y, sparkColor, velocity));
     }
 
@@ -154,23 +156,23 @@
   }
 
   function launchRocket(startX, targetX, targetY, colorOverride) {
-    if (rockets.length >= 5) return;
+    if (rockets.length >= 8) return;
 
-    const fromX = typeof startX === 'number' ? startX : width * (0.12 + Math.random() * 0.76);
-    const toX = typeof targetX === 'number' ? targetX : fromX + (Math.random() * 90 - 45);
+    const fromX = typeof startX === 'number' ? startX : width * (0.08 + Math.random() * 0.84);
+    const toX = typeof targetX === 'number' ? targetX : fromX + (Math.random() * 100 - 50);
 
-    const irregularMiddleHeight = height * (0.30 + Math.random() * 0.35);
+    const irregularMiddleHeight = height * (0.26 + Math.random() * 0.40);
     const toY = typeof targetY === 'number' ? targetY : irregularMiddleHeight;
     const rocketColor = colorOverride || PALETTES[Math.floor(Math.random() * PALETTES.length)];
 
     if (window.DiwaliSound) {
-      window.DiwaliSound.playWhistle(0.5);
+      window.DiwaliSound.playWhistle(0.4);
     }
 
     rockets.push(new Rocket(fromX, height + 10, toX, toY, rocketColor, (detX, detY, col) => {
-      burst(detX, detY, prefersReducedMotion ? 14 : 32, col);
+      burst(detX, detY, prefersReducedMotion ? 16 : (Math.floor(Math.random() * 14) + 36), col);
       if (window.DiwaliSound) {
-        window.DiwaliSound.playBoom(0.38);
+        window.DiwaliSound.playBoom(0.35);
         window.DiwaliSound.playCrackle();
       }
     }));
@@ -241,91 +243,126 @@
 
   // 1. Anar Fountain Effect (Golden Spire Shooting from Ground)
   function launchAnar(customX, customY) {
-    const startX = typeof customX === 'number' ? customX : width * 0.5;
-    const groundY = typeof customY === 'number' ? customY : height - 10;
-    const duration = 1800;
-    const intervalTime = 50;
+    const startX = typeof customX === 'number' ? customX : width * (0.2 + Math.random() * 0.6);
+    const groundY = typeof customY === 'number' ? customY : height - 12;
+    const duration = 2200;
+    const intervalTime = 40;
+    let elapsed = 0;
 
     if (window.DiwaliSound) {
-      window.DiwaliSound.playAnarSound(1.8);
+      window.DiwaliSound.playAnarSound(2.2);
     }
 
     const fountainTimer = setInterval(() => {
-      const sparkCount = prefersReducedMotion ? 4 : 8;
+      elapsed += intervalTime;
+      const progress = Math.min(1, elapsed / (duration * 0.65));
+      const sparkCount = prefersReducedMotion ? 3 : (4 + Math.floor(progress * 7));
+      const power = 3.6 + progress * 5.6;
+
       for (let i = 0; i < sparkCount; i++) {
-        const angle = -Math.PI / 2 + (Math.random() * 0.5 - 0.25);
-        const speed = Math.random() * 5.5 + 3.8;
-        const color = Math.random() > 0.4 ? '#ffd700' : (Math.random() > 0.5 ? '#ff9100' : '#ffffff');
+        const spreadAngle = -Math.PI / 2 + (Math.random() * 0.55 - 0.275);
+        const speed = Math.random() * power + 3.2;
+        const colorPool = ['#ffd700', '#ffb300', '#ffffff', '#ff9100', '#ff1744'];
+        const color = colorPool[Math.floor(Math.random() * colorPool.length)];
         const velocity = {
-          x: Math.cos(angle) * speed + (Math.random() * 1.2 - 0.6),
-          y: Math.sin(angle) * speed
+          x: Math.cos(spreadAngle) * speed + (Math.random() - 0.5) * 1.6,
+          y: Math.sin(spreadAngle) * speed
         };
-        const p = new Particle(startX, groundY, color, velocity);
-        p.gravity = 0.085;
-        p.decay = 0.024;
+        const p = new Particle(startX + (Math.random() * 8 - 4), groundY, color, velocity, 0.022, 0.088);
         particles.push(p);
       }
+
+      if (particles.length > MAX_ACTIVE_PARTICLES) {
+        particles.splice(0, particles.length - MAX_ACTIVE_PARTICLES);
+      }
+
       startAnimationIfNeeded();
     }, intervalTime);
 
     setTimeout(() => {
       clearInterval(fountainTimer);
-      burst(startX, groundY - 80, 24, '#ffd700');
+      // Grand finale crown burst
+      burst(startX, groundY - 140, 36, '#ffd700');
+      if (window.DiwaliSound) {
+        window.DiwaliSound.playCrackle();
+      }
     }, duration);
   }
 
   // 2. Zameen Chakra Effect (Whirling Spiral Ground Wheel)
   function launchChakra(customX, customY) {
-    const startX = typeof customX === 'number' ? customX : width * 0.5;
-    const groundY = typeof customY === 'number' ? customY : height - 20;
-    const duration = 1600;
+    const startX = typeof customX === 'number' ? customX : width * (0.25 + Math.random() * 0.5);
+    const groundY = typeof customY === 'number' ? customY : height - 22;
+    const duration = 2000;
     let angleOffset = 0;
 
     if (window.DiwaliSound) {
-      window.DiwaliSound.playChakraSound(1.6);
+      window.DiwaliSound.playChakraSound(2.0);
     }
 
+    const chakraColors = ['#00e5ff', '#ffd700', '#ff1744', '#76ff03', '#ffffff'];
+
     const chakraTimer = setInterval(() => {
-      angleOffset += 0.45;
-      for (let i = 0; i < 4; i++) {
-        const angle = angleOffset + (Math.PI / 2) * i;
-        const speed = Math.random() * 3.8 + 2.5;
-        const color = i % 2 === 0 ? '#00e5ff' : '#ffd700';
+      angleOffset += 0.52;
+      const arms = 4;
+      for (let i = 0; i < arms; i++) {
+        const angle = angleOffset + (Math.PI * 2 / arms) * i;
+        const speed = Math.random() * 4.4 + 2.8;
+        const color = chakraColors[i % chakraColors.length];
         const velocity = {
           x: Math.cos(angle) * speed,
-          y: Math.sin(angle) * speed * 0.38
+          y: Math.sin(angle) * speed * 0.36
         };
-        const p = new Particle(startX, groundY, color, velocity);
-        p.gravity = 0.015;
-        p.decay = 0.028;
+        const p = new Particle(startX, groundY, color, velocity, 0.026, 0.012);
         particles.push(p);
       }
+
+      // Center glowing spark
+      particles.push(new Particle(
+        startX + (Math.random() * 6 - 3),
+        groundY + (Math.random() * 4 - 2),
+        '#ffffff',
+        { x: (Math.random() - 0.5) * 0.5, y: (Math.random() - 0.5) * 0.5 },
+        0.05,
+        0
+      ));
+
+      if (particles.length > MAX_ACTIVE_PARTICLES) {
+        particles.splice(0, particles.length - MAX_ACTIVE_PARTICLES);
+      }
+
       startAnimationIfNeeded();
-    }, 45);
+    }, 40);
 
     setTimeout(() => {
       clearInterval(chakraTimer);
-      burst(startX, groundY, 32, '#ffd700');
+      burst(startX, groundY, 36, '#ffd700');
       if (window.DiwaliSound) {
-        window.DiwaliSound.playBoom(0.4);
+        window.DiwaliSound.playBoom(0.38);
+        window.DiwaliSound.playCrackle();
       }
     }, duration);
   }
 
   // 3. Sutli Bomb Effect (Green Twine Atom Bomb Explosion)
   function launchSutliBomb(customX, customY) {
-    const bombX = typeof customX === 'number' ? customX : width * 0.5;
-    const bombY = typeof customY === 'number' ? customY : height * 0.5;
+    const bombX = typeof customX === 'number' ? customX : width * (0.35 + Math.random() * 0.3);
+    const bombY = typeof customY === 'number' ? customY : height * (0.45 + Math.random() * 0.18);
 
     if (window.DiwaliSound) {
-      window.DiwaliSound.playFuseSpark(400);
+      window.DiwaliSound.playFuseSpark(450);
     }
 
-    for (let i = 0; i < 12; i++) {
-      particles.push(new Particle(bombX, bombY, '#ffd700', {
-        x: (Math.random() - 0.5) * 1.5,
-        y: (Math.random() - 0.5) * 1.5
-      }));
+    // Sparking fuse trail
+    for (let i = 0; i < 16; i++) {
+      particles.push(new Particle(
+        bombX + (Math.random() * 6 - 3),
+        bombY - 14 + (Math.random() * 6 - 3),
+        Math.random() > 0.4 ? '#ffd700' : '#ff3d00',
+        { x: (Math.random() - 0.5) * 1.8, y: -(Math.random() * 1.5 + 0.5) },
+        0.04,
+        0.03
+      ));
     }
     startAnimationIfNeeded();
 
@@ -337,22 +374,41 @@
       const screenFlash = document.getElementById('screen-flash');
       if (screenFlash) {
         screenFlash.classList.add('active');
-        setTimeout(() => screenFlash.classList.remove('active'), 140);
+        setTimeout(() => screenFlash.classList.remove('active'), 160);
       }
       document.body.classList.add('shake');
-      setTimeout(() => document.body.classList.remove('shake'), 450);
+      setTimeout(() => document.body.classList.remove('shake'), 480);
 
-      burst(bombX, bombY, prefersReducedMotion ? 18 : 45, '#ff1744');
+      // Multi-stage massive blast
+      // Stage 1: Central fiery red-gold core
+      burst(bombX, bombY, prefersReducedMotion ? 20 : 48, '#ff1744');
+      
+      // Stage 2: Green jute twine shrapnel sparks
+      const juteCount = prefersReducedMotion ? 12 : 30;
+      for (let i = 0; i < juteCount; i++) {
+        const angle = (Math.PI * 2 / juteCount) * i + (Math.random() * 0.2 - 0.1);
+        const speed = Math.random() * 5.2 + 2.5;
+        const color = Math.random() > 0.5 ? '#00e676' : '#ffd700';
+        particles.push(new Particle(bombX, bombY, color, {
+          x: Math.cos(angle) * speed,
+          y: Math.sin(angle) * speed
+        }, 0.016, 0.048));
+      }
+
+      // Stage 3: Secondary delayed shockwave burst
       setTimeout(() => {
-        burst(bombX, bombY, 28, '#ffd700');
-      }, 100);
-    }, 400);
+        burst(bombX + (Math.random() * 30 - 15), bombY + (Math.random() * 30 - 15), 32, '#ffd700');
+        if (window.DiwaliSound) {
+          window.DiwaliSound.playCrackle();
+        }
+      }, 90);
+    }, 450);
   }
 
-  // Higher frequency continuous background crackers with rockets, fountains & chakras
+  // Slightly higher density & frequency continuous background crackers
   function startContinuousShow(intervalMs) {
     if (prefersReducedMotion) return;
-    const interval = intervalMs || 1200; // Fast 1.2s cadence for rich, high-density festive sky!
+    const interval = intervalMs || 850; // High frequency festive cadence
 
     stopContinuousShow();
     let tick = 0;
@@ -360,20 +416,33 @@
       if (document.hidden) return;
 
       tick++;
-      // Launch rocket from bottom
+      // Launch rocket from bottom edge
       launchRocket();
 
-      // Frequently launch second rocket from another spot at an irregular middle height
+      // High density: launch second staggered rocket on even ticks
       if (tick % 2 === 0) {
         setTimeout(() => {
           if (!document.hidden) launchRocket();
-        }, 280);
+        }, 220);
       }
 
-      // Periodically trigger ambient Anar or atmospheric bursts
-      if (tick % 7 === 0) {
-        const randomX = width * (0.2 + Math.random() * 0.6);
+      // Burst of celebration: launch 3rd sky rocket periodically
+      if (tick % 5 === 0) {
+        setTimeout(() => {
+          if (!document.hidden) launchRocket();
+        }, 440);
+      }
+
+      // Ground crackers: periodic Anar fountain shooting up from bottom
+      if (tick % 6 === 0) {
+        const randomX = width * (0.15 + Math.random() * 0.7);
         launchAnar(randomX);
+      }
+
+      // Ground crackers: periodic Zameen Chakra spinning on bottom
+      if (tick % 9 === 0) {
+        const randomX = width * (0.2 + Math.random() * 0.6);
+        launchChakra(randomX);
       }
     }, interval);
   }
