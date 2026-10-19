@@ -363,10 +363,43 @@
 
 
 
-    // 1000 Wala Frame Cracker Button
-    const btn1000Frame = document.getElementById('btn-1000-frame');
-    if (btn1000Frame) {
-      btn1000Frame.addEventListener('click', (e) => {
+    // Interactive Crackers Buttons (Anar, Chakra, Sutli Bomb, 1000 Wala)
+    const btnFireAnar = document.getElementById('btn-fire-anar');
+    if (btnFireAnar) {
+      btnFireAnar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.DiwaliFireworks && window.DiwaliFireworks.launchAnar) {
+          window.DiwaliFireworks.launchAnar();
+          showToast('Golden Anar Fountain Sparkling! 🌋✨');
+        }
+      });
+    }
+
+    const btnFireChakra = document.getElementById('btn-fire-chakra');
+    if (btnFireChakra) {
+      btnFireChakra.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.DiwaliFireworks && window.DiwaliFireworks.launchChakra) {
+          window.DiwaliFireworks.launchChakra();
+          showToast('Whirling Zameen Chakra Spinning! 🌀💫');
+        }
+      });
+    }
+
+    const btnFireSutli = document.getElementById('btn-fire-sutli');
+    if (btnFireSutli) {
+      btnFireSutli.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.DiwaliFireworks && window.DiwaliFireworks.launchSutliBomb) {
+          window.DiwaliFireworks.launchSutliBomb();
+          showToast('Sutli Atom Bomb Detonated! 💣💥');
+        }
+      });
+    }
+
+    const btnFire1000 = document.getElementById('btn-fire-1000') || document.getElementById('btn-1000-frame');
+    if (btnFire1000) {
+      btnFire1000.addEventListener('click', (e) => {
         e.stopPropagation();
         if (window.DiwaliFireworks && window.DiwaliFireworks.burst1000WalaAroundFrame) {
           window.DiwaliFireworks.burst1000WalaAroundFrame();
@@ -433,8 +466,8 @@
     // 1. Initialize Canvas Fireworks Engine
     if (window.DiwaliFireworks) {
       window.DiwaliFireworks.init('fireworks-canvas');
-      // Denser ambient fireworks: 1.8s cadence with rockets and sky bursts
-      window.DiwaliFireworks.startContinuousShow(1800);
+      // Higher density & frequency background crackers: 900ms cadence with rockets, fountains & chakras
+      window.DiwaliFireworks.startContinuousShow(900);
     }
 
     // 2. Initialize Features

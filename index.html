@@ -119,6 +119,32 @@
 
     </div>
 
+    <!-- Interactive Festive Crackers Shelf -->
+    <section class="interactive-crackers-tray" aria-label="Interactive Diwali Crackers">
+      <div class="tray-title-wrap">
+        <span class="tray-title">🎆 Burst More Festive Crackers!</span>
+        <span class="tray-tamil-sub">விருப்பமான பட்டாசுகளை வெடியுங்கள்</span>
+      </div>
+      <div class="cracker-buttons-grid">
+        <button id="btn-fire-anar" class="btn-cracker btn-anar" aria-label="Light Flowerpot Fountain (Anar)">
+          <span class="cracker-btn-icon">🌋</span>
+          <span class="cracker-btn-label"><strong>Anar</strong> <small>பூந்தொட்டி</small></span>
+        </button>
+        <button id="btn-fire-chakra" class="btn-cracker btn-chakra" aria-label="Spin Ground Chakra">
+          <span class="cracker-btn-icon">🌀</span>
+          <span class="cracker-btn-label"><strong>Chakra</strong> <small>சக்கரம்</small></span>
+        </button>
+        <button id="btn-fire-sutli" class="btn-cracker btn-sutli" aria-label="Explode Sutli Bomb">
+          <span class="cracker-btn-icon">💣</span>
+          <span class="cracker-btn-label"><strong>Sutli Bomb</strong> <small>ஆட்டம் பாம்</small></span>
+        </button>
+        <button id="btn-fire-1000" class="btn-cracker btn-1000" aria-label="Burst 1000 Wala Frame">
+          <span class="cracker-btn-icon">🧨</span>
+          <span class="cracker-btn-label"><strong>1000 Wala</strong> <small>சரவெடி</small></span>
+        </button>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="site-footer">
       <div class="footer-lights" aria-hidden="true">🪔 ✨ 🎆 ✨ 🪔</div>
@@ -151,10 +177,10 @@
         continueBtn.href = `wishes.html?to=${encodeURIComponent(recipientName.trim())}`;
       }
 
-      // Initialize Fireworks Canvas Engine & Background Show
+      // Initialize Fireworks Canvas Engine & Higher Frequency Background Show
       if (window.DiwaliFireworks) {
         window.DiwaliFireworks.init('fireworks-canvas');
-        window.DiwaliFireworks.startContinuousShow(2400);
+        window.DiwaliFireworks.startContinuousShow(950);
       }
 
       // Falling Sweets Figures Animation
@@ -286,6 +312,48 @@
         btn1000Wala.addEventListener('click', (e) => {
           e.stopPropagation();
           if (window.DiwaliFireworks.burst1000WalaAroundFrame) {
+            window.DiwaliFireworks.burst1000WalaAroundFrame();
+          }
+        });
+      }
+
+      // Interactive Crackers Buttons (Anar, Chakra, Sutli Bomb, 1000 Wala)
+      const btnFireAnar = document.getElementById('btn-fire-anar');
+      const btnFireChakra = document.getElementById('btn-fire-chakra');
+      const btnFireSutli = document.getElementById('btn-fire-sutli');
+      const btnFire1000 = document.getElementById('btn-fire-1000');
+
+      if (btnFireAnar) {
+        btnFireAnar.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (window.DiwaliFireworks && window.DiwaliFireworks.launchAnar) {
+            window.DiwaliFireworks.launchAnar();
+          }
+        });
+      }
+
+      if (btnFireChakra) {
+        btnFireChakra.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (window.DiwaliFireworks && window.DiwaliFireworks.launchChakra) {
+            window.DiwaliFireworks.launchChakra();
+          }
+        });
+      }
+
+      if (btnFireSutli) {
+        btnFireSutli.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (window.DiwaliFireworks && window.DiwaliFireworks.launchSutliBomb) {
+            window.DiwaliFireworks.launchSutliBomb();
+          }
+        });
+      }
+
+      if (btnFire1000) {
+        btnFire1000.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (window.DiwaliFireworks && window.DiwaliFireworks.burst1000WalaAroundFrame) {
             window.DiwaliFireworks.burst1000WalaAroundFrame();
           }
         });

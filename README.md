@@ -48,9 +48,12 @@ Designed to be hosted for free on **GitHub Pages** and shared with friends and f
    - 100% Web Audio API: low-frequency boom, rising pitch whistle, crackle, and sizzling fuse.
    - **No external audio files needed**: Zero broken CDN links, zero CORS issues, works completely offline.
    - Visible mute/unmute button that remembers visitor preferences in `localStorage`.
-5. **1000 Wala Frame Cracker & Rising Sky Rockets**:
-   - Sky rockets launching from the bottom of the screen and blasting at irregular middle heights.
-   - Dedicated "🧨 Burst 1000 Wala Around Frame" button producing rapid-fire perimeter cracker bursts with authentic crackle sounds.
+5. **Interactive Crackers Suite (Anar, Chakra, Sutli Bomb & 1000 Wala)**:
+   - **Anar (Fountain / பூந்தொட்டி)**: Towering golden fountain spraying glittering gold, amber, and silver sparks upwards from the ground with authentic hissing audio and crown burst finale.
+   - **Zameen Chakra (Ground Spinner / சக்கரம்)**: Rapidly spinning wheel of fire on the ground spraying vibrant peacock cyan, gold, and lime sparks with whirling FM synthesizer audio.
+   - **Sutli Bomb (Atom Bomb / ஆட்டம் பாம்)**: Sizzling green jute fuse followed by a thunderous detonation, screen flash, body shake, and explosive shockwave particles.
+   - **1000 Wala Garland (சரவெடி)**: Rapid perimeter bursts along all 4 screen borders with snappy crackle audio pops.
+   - **Dense Background Sky Rockets**: Continuous ambient fireworks launching from the bottom edge and detonating at irregular middle heights (26%–66% screen height) with higher density and frequency.
 6. **16 Curated Wishes (English & Tamil Only)**:
    - "New wish" button displays random blessings with a smooth fade animation.
    - Language rules: **Strictly English and Tamil only**.
